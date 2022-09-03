@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Writing
+title: Category
 description: >
   Hydejack offers a few additional features to markup your content.
   Don't worry, these are merely CSS classes added with kramdown's `{:...}` syntax,
@@ -359,7 +359,7 @@ KaTeX does not support the `align` and `align*` environments.
 Instead, `aligned` should be used, e.g. `\begin{aligned} ... \end{aligned}`.
 {:.note}
 
-Continue with [Scripts](scripts.md){:.heading.flip-title}
+Continue with [Contest](contest.md){:.heading.flip-title}
 {:.read-more}
 
 

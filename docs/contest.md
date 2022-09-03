@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Scripts
+title: Contest
 description: >
   There are two ways of adding third party scripts.
   Embedding is ideal for one-off scripts, while global scripts are loaded on every page.
@@ -90,5 +90,5 @@ hydejack:
 ```
 
 
-Continue with [Build](build.md){:.heading.flip-title}
+Continue with [User](user.md){:.heading.flip-title}
 {:.read-more}

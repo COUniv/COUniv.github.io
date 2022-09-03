@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Build
+title: User
 description: >
   This chapters shows how to prepare your Hydejack site for a production build and deployment on 3rd party hosting providers.
 hide_description: true
@@ -83,8 +83,8 @@ $ cd ..
 More on [user, organization, and project pages](https://help.github.com/articles/user-organization-and-project-pages/). -->
 
 
-<!-- Continue with [Advanced](advanced.md){:.heading.flip-title}
-{:.read-more} -->
+Continue with [Announcement](announcement.md){:.heading.flip-title}
+{:.read-more}
 
 [deploy]: https://jekyllrb.com/docs/deployment-methods/
 [lsa]: https://en.wikipedia.org/wiki/Latent_semantic_analysis

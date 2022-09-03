@@ -1,11 +1,11 @@
 ---
-layout: page
-title: Intro
+layout: about
+title: About
 description: >
   cou intro
 hide_description: true
 sitemap: false
-permalink: /introduce/
+permalink: /about/
 ---
 
 안녕하세요. COU입니다.

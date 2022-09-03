@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Install
+title: Announcement
 description: >
   How you install Hydejack depends on whether you start a new site,
   or change the theme of an existing site.
@@ -138,8 +138,5 @@ $ bundle exec jekyll serve
 and point your browser to <http://localhost:4000> to see Hydejack in action.
 
 
-Continue with [Config](config.md){:.heading.flip-title}
+Continue with [SystemConfig](config.md){:.heading.flip-title}
 {:.read-more}
-
-
-[upgrade]: upgrade.md
