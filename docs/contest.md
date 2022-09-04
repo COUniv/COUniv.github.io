@@ -2,92 +2,70 @@
 layout: page
 title: Contest
 description: >
-  There are two ways of adding third party scripts.
-  Embedding is ideal for one-off scripts, while global scripts are loaded on every page.
+  Contest documentation
 hide_description: true
 sitemap: false
 ---
 
-There are two ways of adding third party scripts.
-[Embedding](#embedding) is ideal for one-off scripts, e.g. `widgets.js` that is part of embedded tweets (see below).
-Adding [global scripts](#global-scripts) is for scripts that should be loaded on every page.
+대회와 관련한 문서입니다.
 
-0. this unordered seed list will be replaced by toc as unordered list
+0. Contest docs table
 {:toc}
 
-## Embedding
-Hydejack supports embedding third party scripts directly inside markdown content. This will work in most cases, except when a script can not be loaded on a page more than once (this will occur when a user navigates to the same page twice).
+## Summary
+기본적으로 대회를 생성하고 관리할 수 있는 권한은 Admi, Super Admin만 가능합니다. 
+{:.note}
 
-Example:
+## Make a Contest
+대회를 생성하기 위한 내용이 있는 문서입니다. 대회를 생성하는 메뉴는 `대회 > 대회 생성`에서 진행됩니다.
+ 대회를 만들고 실제로 문제를 등록을 하기 위해서는 사전에 문제가 준비되어있어야 합니다. 문제를 생성하는 방법에 대해서는 [Problem 문서](problem.md)를 참고하시기를 바랍니다.
 
-~~~html
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<blockquote class="twitter-tweet" data-lang="en">
-  <p lang="en" dir="ltr">
-    The next version of Hydejack (v6.3.0) will allow embedding 3rd party scripts,
-    like the one that comes with this tweet for example.
-  </p>
-  &mdash; Florian Klampfer (@qwtel)
-  <a href="https://twitter.com/qwtel/status/871098943505039362">June 3, 2017</a>
-</blockquote>
-~~~
 
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-<blockquote class="twitter-tweet" data-lang="en"><p lang="en" dir="ltr">The next version of Hydejack (v6.3.0) will allow embedding 3rd party scripts, like the one that comes with this tweet for example.</p>&mdash; Florian Klampfer (@qwtel) <a href="https://twitter.com/qwtel/status/871098943505039362">June 3, 2017</a></blockquote>
+### Contest Format
+대회 생성은 정확히 말하자면, 대회라는 포맷을 생성할 뿐 코딩 문제들을 생성하는 것이 아닙니다.
+대회를 생성한 뒤에 문제는 이후 별도로 대회에 넣어주셔야 하니 이 점을 참고하시길 바랍니다.
 
-## Global scripts
-If you have scripts that should be included on every page you can add them globally by
-opening (or creating) `_includes/my-scripts.html` and adding them like you normally would:
+#### 제목
+해당 대회에 대한 제목을 설정하는 란 입니다.
 
-```html
-<!-- file: `_includes/my-scripts.html` -->
-<script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-  crossorigin="anonymous"></script>
-```
+#### 설명
+특정 문제에 대한 설명이 아닌, 대회에 대한 설명입니다.
 
-`my-scripts.html` will be included at the end of the `body` tag.
+#### 시작 시간 & 종료 시간
+대회를 시작하고 종료할 수 있는 시간을 지정 할 수 있습니다. 대회는 생성되는 시점에서 사용자에게 보여지나, 설정한 대회 시작 전 혹은 후에는 대회에 대한 제목, 내용(설명)만 표시될 뿐 대회에 있는 문제들에 대해서는 접근 권한이 없습니다.
 
-## Registering push state event listeners
-When embedding scripts globally you might want to run some init code after each page load. However, the problem with push state-based page loads is that the `load` event won't fire again. Luckily, Hydejack's push state component exposes an event that you can listen to instead.
+#### 대회 전용 비밀번호
+대회에 특정 비밀번호를 부여하여 해당 비밀번호를 알고있는 사용자에게만 문제에 접근이 가능하도록 설정 할 수 있습니다.
+단, 대회의 타이틀과 내용은 비밀번호 여부와 상관없이 모든 사용자가 볼 수 있으나, 그외에 대회의 문제나 제출자 등 기타 컨텐츠들은 접근이 불허됩니다.
 
-```html
-<!-- file: `_includes/my-scripts.html` -->
-<script>
-  document.getElementById('_pushState').addEventListener('hy-push-state-load', function() {
-    // <your init code>
-  });
-</script>
-```
+공란으로 제출할 경우 모든 사용자가 해당 대회에 접근 할 수 있습니다.
 
-Note that the above code must only run once, so include it in your `my-scripts.html`.
+#### Contest Rule Type
+대회를 ACM mode 혹은 OI 모드로 할지 선택할 수 있습니다.
+현재는 ACM모드만 지원하며, 추후 OI모드도 확장하여 지원할 계획입니다. 해당 모드에 대한 자세한 설명은 [ACM and OI](../problem/#acm-and-oi) 문서를 참고하시기를 바랍니다.
 
-`hy-push-state-start`
-: Occurs after clicking a link.
+#### Real Time Rank
+대회에서 실시간으로 채점 결과를 반영하여 랭크를 업데이트 혹은 이를 비활성화하는 옵셥을 제공합니다.
+기본적으로는 실시간 반영으로 옵션이 설정되어있으나, 대회가 끝나고 나서 채점 결과를 업데이트를 하고 싶은 경우 이 기능을 비활성화 해주시면 됩니다.
 
-`hy-push-state-ready`
-: Animation fished and response has been parsed, ready to swap out the content.
+#### Status
+Status는 대회를 삭제하진 않고 데이터를 보존하되, 사용자에게만 보여지지 않도록 변경하고자 할 때 쓰는 기능입니다. 이 기능을 활성화 하면, 사용자에서는 해당 대회를 접근할 수 없게 됩니다.
 
-`hy-push-state-after`
-: The old content has been replaced with the new content.
 
-`hy-push-state-progress`
-: Special case when animation is finished, but no response from server has arrived yet.
-  This is when the loading spinner will appear.
+#### 허용 IP 범위
+특정 IP 범주 내에서만 접근을 허용하고자 할 때 사용사실 수 있습니다. CIDR 표현방식을 따릅니다.
 
-`hy-push-state-load`
-: All embedded script tags have been inserted into the document and have finished loading.
 
-## If everything else fails
-If you can't make an external script work with Hydejack's push state approach to page loading,
-you can disable push state by adding to your config file:
+#### 문제 추가
+대회가 생성되었다면 문제를 추가해야 합니다. 이는 대회 리스트에서 수정할 수 있으니 []() 를 참고하시기를 바랍니다.
 
-```yml
-# file: `_config.yml`
-hydejack:
-  no_push_state: true
-```
+
+## Management a Contest
+대회를 관리하고 각종 편의 기능을 사용하는 방법에 대한 문서입니다.
+
+### Contest List
+대회 리스트는 생성했던 모든 대회에 대해 볼 수 있으며, 각 대회 별 옵션들을 활용하여 대회를 관리할 수 있습니다.
+
 
 
 Continue with [User](user.md){:.heading.flip-title}
