@@ -2,86 +2,162 @@
 layout: page
 title: User
 description: >
-  This chapters shows how to prepare your Hydejack site for a production build and deployment on 3rd party hosting providers.
+  User docs
 hide_description: true
 sitemap: false
 ---
 
-This chapters shows how to prepare your Hydejack site for a production build and deployment on 3rd party hosting providers.
+사용자 관리와 관련한 문서입니다.
 
-0. this unordered seed list will be replaced by toc as unordered list
+0. User docs table
 {:toc}
 
-## Building locally
-When building Hydejack it is important to set the environment variable `JEKYLL_ENV` to `production`.
-Otherwise the output will not be minified. Building itself happens via Jekyll's `build` command.
+## Summary
+사용자 관리는 Super Admin 권한을 갖는 사용자만 관리할 수 있습니다. 이는 ```일반 > 사용자 관리```에서 볼 수 있습니다.
 
-~~~bash
-$ JEKYLL_ENV=production bundle exec jekyll build
-~~~
+## User
+사용자의 목록을 확인하실 수 있습니다. 검색은 닉네임과 이름을 통해 검색할 수 있습니다.
 
-This will generate the finished static files in `_site`,
-which can be deployed using the methods outlined in the [Jekyll Documentation][deploy].
+### 고유 ID
+고유 ID는 사용자가 계정을 사용할 때 자동으로 부여되는 값입니다.
+
+### 닉네임
+닉네임은 사용자가 실제 가입한 ID이자 닉네임입니다.
+
+### 생성일자
+생성일자는 사용자가 가입한 시점을 의미합니다.
+
+### 마지막 로그인
+사용자가 마지막으로 로그인 한 시점을 보여줍니다.
+
+### 이름
+사용자의 실제 이름을 의미합니다.
+
+### 이메일
+해당 사이트는 기본적으로 이메일 인증을 의무화하고 있습니다. 이 인증을 하기 위한 이메일 혹은 인증 된 이메일을 보여줍니다.
+
+### 사용자 권한
+사용자 권한은 각 사용자별 권한을 나타냅니다. 크게 3가지 타입으로 나뉩니다.
+- Regular User (일반 사용자)
+  - 사용자가 가입할 때 기본적으로 부여되는 권한입니다.
+- Admin (관리자)
+  - 일반 사용자보다 높은 권한을 갖고 있습니다. 기본적으로 문제와 대회를 생성 및 삭제 권한이 추가로 부여됩니다.
+- Super Admin (최고 관리자)
+  - 가장 높은 권한을 갖고 있습니다. 사용자 관리, 공지사항, 서버, 시스템 설정 등 시스템 운용에 필요한 권한들을 갖습니다.
+
+### 옵션
+각 사용자별 정보를 수정하거나 삭제를 할 수 있습니다.
+
+#### 닉네임
+사용자가 로그인 할 때 기입하는 ID를 수정할 수 있습니다.
+
+#### 이름
+사용자의 실명 정보를 수정할 수 있습니다.
+
+#### 이메일
+사용자의 이메일을 수정 할 수 있습니다. 공란으로 제출시 이메일이 변경되지 않습니다. 만일 이메일 정보를 삭제하고자 할 경우 공백을 넣어 제출해주시길 바랍니다.
+
+#### 새 비밀번호
+사용자의 비밀번호를 변경할 수 있습니다. 공란으로 제출시 기존 사용자의 비밀번호가 그대로 유지됩니다.
+
+#### 사용자 권한
+해당 사용자의 권한을 직접 수정할 수 있습니다. 사용자 권한에 대한 자세한 내용은 [사용자 권한](#사용자-권한) 에서 확인하실 수 있습니다.
+
+<!-- 
+추후 추가 될 내용
+#### Two Factor Auth
+#### Open API 
+-->
+
+#### Email Verification
+일반 사용자(Regular User)의 경우 정상적으로 서비스를 이용하기 위해서는 이메일 인증을 반드시 필요로 합니다. 이 때 관리자 권한으로 해당 사용자의 이메일을 강제로 인증된 상태로 변경 할 수 있습니다.
+단, 사용자가 이메일을 수정할시 해당 인증 옵션은 풀리게 됩니다.
+
+#### 계정 비활성화
+해당 사용자의 계정을 비활성화 할 수 있습니다.
 
 
-## Building locally with latent semantic analysis
-By default, related posts are simply the most recent posts.
-Hydejack modifies this a bit, by showing the most recent posts of the same category or tag.
-However, the results are still pretty "unrelated".
-To provide better results, Jekyll supports [latent semantic analysis][lsa] via [`classifier-reborn`][crb]'s
-[Latent Semantic Indexer][lsi]
+## Import User
+csv 파일로 사용자를 추가 하여 생성할 수 있습니다. 특히 특정 형식으로 대량의 사용자를 추가하고자 할 때 유용합니다.
 
-To use the LSI, you first have to disable Hydejack's default behavior,
-by setting `use_lsi: true` under the `hydejack` key in your config file.
+### Import User Format
+csv파일만 지원합니다. csv 파일에는 **헤더가 없어야 하며** 사용자 아이디, 비밀번호, 이메일, 실명, 학교, 학과 순으로 총 6개의 열이 있어야 합니다. 또한 한국어를 제대로 인식할 수 있도록 UTF-8로 저장해야 합니다.
 
-~~~yml
-# file: `_config.yml`
-hydejack:
-  use_lsi: true
-~~~
+이 중 아이디, 비밀번호, 실명은 **반드시** 기입되어야하며 나머지 열은 공백이 허용됩니다.
 
-Then, you have to run `jekyll build` with the `--lsi` flag:
-
-~~~bash
-$ JEKYLL_ENV=production bundle exec jekyll build --lsi
-~~~
-
-
-Note that this may take a long time.
-Once it is finished, the generated static files will be located in the `_site` directory,
-which can be deployed using the methods outlined in the [Jekyll Documentation][deploy].
+- 사용자 아이디
+  - 사용자 아이디는 공백을 허용하지 않으며 반드시 각 아이디는 고유해야 합니다.
+- 비밀번호
+  - 비밀번호는 공백을 허용하지 않으며 중복이 허용되나 최소 6자리 이상으로 구성해주셔야 합니다.
+- 이메일
+  - 이메일은 공백이 허용되나 기입을 할 경우 해당 이메일은 반드시 고유해야 하며 이메일 형식에 맞추어 작성해주셔야 합니다.
+- 실명
+  - 실명은 공백을 허용하지 않습니다. 이름은 고유하지 않아도 됩니다.
+- 학교
+  - 학교는 공백을 허용하며 고유하지 않아도 됩니다.
+- 학과
+  - 학과는 공백을 허용하며 고유하지 않아도 됩니다.
 
 
-## GitHub Pages
-If you're using the Starter Kit for GitHub pages, all you have to do is push your repository:
+에로들어 다음과 같습니다.
 
-```bash
-$ git add .
-$ git commit "Update"
-$ git push origin master
+| 사용자 아이디 |  비밀 번호  |       이메일       |   실명   |    학교    |   학과    |
+|:-------------:|:-----------:|:------------------:|:---------:|:---------:|:---------:|
+|     user1     |    pswd1    |   aaa@google.com   |   철수   |   한국대   |     IT    |
+|     user2     |    pswd2    |                    |   영희   |   한국대   |           |
+|     user3     |    pswd1    |   ccc@google.com   |   철수   |   한국대   |           |
+{:.smaller}
+(userlist.csv)
+{:.smaller}
+
+<br />
+
+<span><span style="color:#ff4949">반드시 헤더는 제거해야 합니다.</span> 위 예시는 이해를 돕기위해 해더를 넣었을 뿐 실제로는 헤더를 넣으면 안됩니다.
+실제 csv 파일은 다음과 같이 구성되어야 합니다.
+{:.note title="주의"}
+
+|:-------------:|:-----------:|:------------------:|:---------:|:---------:|:---------:|
+|     user1     |    pswd1    |   aaa@google.com   |   철수   |   한국대   |     IT    |
+|     user2     |    pswd2    |                    |   영희   |   한국대   |           |
+|     user3     |    pswd1    |   ccc@google.com   |   철수   |   한국대   |           |
+{:.smaller}
+
+위 양식대로 csv 파일을 작성하였다면 **Choose File** 버튼을 눌러 해당 csv파일을 업로드 하면 해당 포맷에 맞게 생성 할 사용자 리스트가 생성 될 겁니다. 한 번 더 확인한 뒤, **Import All** 버튼을 누르면 생성이 완료됩니다.
+
+만약 에러가 날 경우 위 양식에 맞지 않게 작성된 것이니 다시 한 번 csv파일을 검토해야 합니다.
+
+
+## 사용자 생성
+빠르게 사용자를 생성할 수 있는 기능입니다. 사용자 아이디는 다음과 같이 구성됩니다.
 ```
+Prefix+Number+Suffix
+```
+예로들어 Prefix가 **user**, Number가 **1**, Suffix가 **hello**라면 생성되는 사용자 아이디는 **user1hello** 가 됩니다.
 
-<!-- ## GitHub Pages
-To deploy to GitHub Pages, the steps are:
+일반적으로 대량의 아이디를 생성할 경우 Prefix와 Number, 혹은 Prefix, Suffix, Number 구성을 선호합니다.
 
-~~~bash
-$ cd _site
-$ git init # you only need to do this once
-$ git remote add origin <github_remote_url> # you only need to do this once
-$ git add .
-$ git commit -m "Build"
-$ git push origin master:<remote_branch>
-$ cd ..
-~~~
+위와 같이 만들어진 사용자들은 기본적으로 Regular User(일반 사용자)권한을 갖으며, 이메일은 인증되어있지 않은 상태가 됩니다.
+비밀번호의 경우 랜덤으로 부여되므로, 해당 양식에 맞게 작성한 뒤, **Generate & Export** 버튼을 누르면 사용자가 생성되고, users.xlsx 파일이 다운로드 됩니다.
+해당 파일을 열어보시면 사용자의 아이디와 각 랜덤으로 부여된 비밀번호가 있습니다.
 
-`github_remote_url`
-: Find this on your repository's GitHub page.
 
-`remote_branch`
-: Either `master` for "user or organization pages", or `gh-pages` for "project pages"
+### Prefix
+사용자 아이디(=닉네임)의 앞부분입니다.
 
-More on [user, organization, and project pages](https://help.github.com/articles/user-organization-and-project-pages/). -->
+### Suffix
+사용자 아이디(=닉네임)의 뒷 부분입니다.
 
+### Start Number
+사용자 아이디에 숫자를 붙일 때 시작할 숫자를 지정합니다. 해당 번호는 Prefix 뒤에 숫자가 붙게 됩니다.
+
+### End Number
+사용자 아이디에 숫자를 붙일 때 끝마칠 숫자를 지정합니다.
+
+### Password Length
+랜덤으로 생성할 비밀번호의 길이를 지정합니다. 8자리 이상일 것을 추천드립니다.
+
+
+<br />
 
 Continue with [Announcement](announcement.md){:.heading.flip-title}
 {:.read-more}

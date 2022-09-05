@@ -21,10 +21,13 @@ permalink: /docs/
 {:.related-posts.faded}
 
 ## Other
-* [LICENSE]{:.heading.flip-title} --- The license of this project.
-* [NOTICE]{:.heading.flip-title} --- Parts of this program are provided under separate licenses.
-* [CHANGELOG]{:.heading.flip-title} --- Version history of Hydejack.
+* [WEB LICENSE]{:.heading.flip-title} --- The license of this project.
+* [THIS PAGE LICENSE]{:.heading.flip-title} --- The license of this project.
 {:.related-posts.faded}
+<!-- 
+* [NOTICE]{:.heading.flip-title} --- Parts of this program are provided under separate licenses.
+* [CHANGELOG]{:.heading.flip-title} --- Version history of Hydejack. 
+-->
 
 [problem]: problem.md
 [category]: category.md
@@ -32,6 +35,7 @@ permalink: /docs/
 [user]: user.md
 [announcement]: announcement.md
 [systemconfig]: config.md
-[LICENSE]: ../LICENSE.md
+[WEB LICENSE]: ../licenses/MIT.md
+[THIS PAGE LICENSE]: ../LICENSE.md
 [NOTICE]: ../NOTICE.md
 [CHANGELOG]: ../CHANGELOG.md
